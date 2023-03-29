@@ -281,6 +281,7 @@ select {
     background-image: none;
 }
 
+.float-list,
 .btn,
 button,
 select,
@@ -684,6 +685,12 @@ small {
 
     &::-webkit-scrollbar-track {
         background-color: #fff;
+    }
+    #search {
+        margin: 0 auto;
+        padding: 0 0.5rem;
+        width: 90%;
+        border-radius: 1lh;
     }
 }
 
@@ -3489,6 +3496,48 @@ pre.command-output {
 [data-page="admin-status-iptables"] .right {
     margin-bottom: 0 !important;
 }
+
+/* menu search */
+#menu_search {
+    margin: 0 auto;
+    padding: 0 0.5rem;
+    width: 90%;
+    border-radius: 1lh;
+}
+#search_result {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 1ex;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    background-color: var(--menu-bg-color);
+    .float-list {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding-left: 0;
+        padding-right: 0;
+        a, span {
+            display: block;
+            width: 100%;
+            padding-left: 1em;
+            padding-right: 1em;
+            user-select: none;
+            color: #5f6368;
+            color: var(--menu-color);
+            /* hide left part if overflow */
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            direction: rtl;
+        }
+    }
+}
+
 
 /* IE hacks */
 @media all and (-ms-high-contrast: none) {
