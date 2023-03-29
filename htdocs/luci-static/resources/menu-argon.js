@@ -34,7 +34,7 @@ return baseclass.extend({
 		document.querySelector('.darkMask')
 			.addEventListener('click', ui.createHandlerFn(this, 'handleSidebarToggle'));
 
-        this.initMenuSearch();
+		this.initMenuSearch();
 	},
 
 	handleMenuExpand: function (ev) {
@@ -157,50 +157,67 @@ return baseclass.extend({
 			darkmask.classList.add('active');
 		}
 	},
-    initMenuSearch: function() {
-        var search_result = document.querySelector('#search_result');
-        var search = document.querySelector('#menu_search');
-        var do_search = function() {
-            var ul = search_result.querySelector("ul");
-            var li = document.createElement("li");
+	initMenuSearch: function() {
+		var search_result = document.querySelector('#search_result');
+		var search = document.querySelector('#menu_search');
+		var do_search = function() {
+			var ul = search_result.querySelector("ul");
+			var li = document.createElement("li");
 			var tips = document.createElement("span");
-            tips.innerText = _("Empty Input");
+			tips.innerText = _("Empty Input");
 			li.appendChild(tips);
-            ul.replaceChildren(li);
-            if (search.value === "")
-                return;
-            var found = Array.prototype.slice.call(document.querySelector('#mainmenu .nav').querySelectorAll('a'))
-                .filter(function(a){
-                    return [a.getAttribute("data-title"), a.innerText].some(function(s){return s && s.toLowerCase().indexOf(this) != -1}, this)
-                }, search.value.toLowerCase());
-            if (found.length > 0) {
-                ul.replaceChildren();
-            } else {
-                tips.innerText = _("Not Found");
-            }
-            found.forEach(function(a){
-                var na = document.createElement("a");
-                na.innerText = a.innerText;
-                na.href = a.getAttribute("href");
-                var li = document.createElement("li");
-                li.appendChild(na);
-                this.appendChild(li);
-            }, ul);
-        };
-        search.addEventListener('keyup', function(e){
-            console.log("keyup", e.isComposing, search.value);
-            if (e.isComposing)
-                return;
-            do_search();
-        });
-        search.addEventListener('click', function(e){
-            do_search();
-            search_result.style.display="";
-        });
-        search.addEventListener('blur', function(e){
-            setTimeout(function(){
-                search_result.style.display="none";
-            }, 100);
-        });
-    },
+			ul.replaceChildren(li);
+			if (search.value === "")
+				return;
+			var found = Array.prototype.slice.call(document.querySelector('#mainmenu .nav').querySelectorAll('a'))
+				.filter(function(a){
+					var href = a.getAttribute('href');
+					href = href.substring(href.lastIndexOf('/') + 1);
+					return [a.getAttribute("data-title"), a.innerText, href].some(function(s){return s && s.toLowerCase().indexOf(this) != -1}, this)
+				}, search.value.toLowerCase());
+			if (found.length > 0) {
+				ul.replaceChildren();
+			} else {
+				tips.innerText = _("Not Found");
+			}
+			found.forEach(function(a){
+				var na = document.createElement("a");
+				na.href = a.getAttribute("href");
+				na.innerText = a.innerText;
+				if (!a.classList.contains("menu")) {
+					var p = a.parentElement.parentElement;
+					while(p) {
+						if (p.tagName == "LI") {
+							var m = p.querySelector("a.menu");
+							if (m) {
+								na.innerText = m.innerText + " > " + na.innerText;
+							} else {
+								break;
+							}
+						} else if (p.id == "mainmenu") {
+							break;
+						}
+						p = p.parentElement;
+					}
+				}
+				var li = document.createElement("li");
+				li.appendChild(na);
+				this.appendChild(li);
+			}, ul);
+		};
+		search.addEventListener('keyup', function(e){
+			if (e.isComposing)
+				return;
+			do_search();
+		});
+		search.addEventListener('click', function(e){
+			do_search();
+			search_result.style.display="";
+		});
+		search.addEventListener('blur', function(e){
+			setTimeout(function(){
+				search_result.style.display="none";
+			}, 100);
+		});
+	},
 });
