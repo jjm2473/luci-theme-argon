@@ -158,6 +158,7 @@ return baseclass.extend({
 		}
 	},
 	initMenuSearch: function() {
+		var ignore_blur = false;
 		var search_result = document.querySelector('#search_result');
 		var search = document.querySelector('#menu_search');
 		var do_search = function() {
@@ -187,7 +188,7 @@ return baseclass.extend({
 				if (!a.classList.contains("menu")) {
 					var p = a.parentElement.parentElement;
 					while(p) {
-						if (p.tagName == "LI") {
+						if (p.tagName === "LI") {
 							var m = p.querySelector("a.menu");
 							if (m) {
 								na.innerText = m.innerText + " > " + na.innerText;
@@ -205,19 +206,38 @@ return baseclass.extend({
 				this.appendChild(li);
 			}, ul);
 		};
+		var close_result = function() {
+			search_result.style.display = "none";
+		};
 		search.addEventListener('keyup', function(e){
 			if (e.isComposing)
 				return;
 			do_search();
+			if (search_result.style.display === "none") {
+				search_result.style.display = "";
+			}
 		});
 		search.addEventListener('click', function(e){
-			do_search();
-			search_result.style.display="";
+			if (search_result.style.display === "none") {
+				do_search();
+				search_result.style.display = "";
+			} else {
+				close_result();
+			}
 		});
 		search.addEventListener('blur', function(e){
-			setTimeout(function(){
-				search_result.style.display="none";
-			}, 100);
+			if (ignore_blur)
+				return;
+			close_result();
+		});
+		search_result.addEventListener('mousedown', function(e){
+			ignore_blur = true;
+		});
+		search_result.addEventListener('mouseup', function(e){
+			ignore_blur = false;
+		});
+		search_result.addEventListener('click', function(e){
+			close_result();
 		});
 	},
 });
