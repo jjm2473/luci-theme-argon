@@ -167,7 +167,8 @@ return baseclass.extend({
 			var tips = document.createElement("span");
 			tips.innerText = _("Empty Input");
 			li.appendChild(tips);
-			ul.replaceChildren(li);
+			ul.innerHTML="";
+			ul.appendChild(li);
 			if (search.value === "")
 				return;
 			var found = Array.prototype.slice.call(document.querySelector('#mainmenu .nav').querySelectorAll('a'))
@@ -177,7 +178,7 @@ return baseclass.extend({
 					return [a.getAttribute("data-title"), a.innerText, href].some(function(s){return s && s.toLowerCase().indexOf(this) != -1}, this)
 				}, search.value.toLowerCase());
 			if (found.length > 0) {
-				ul.replaceChildren();
+				ul.innerHTML="";
 			} else {
 				tips.innerText = _("Not Found");
 			}
