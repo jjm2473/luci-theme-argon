@@ -1217,9 +1217,13 @@ div[style="width:100%;height:300px;border:1px solid #000;background:#fff"] {
                     color: #fb6340;
                 }
 
-                a[data-title=Logout]:before {
-                    content: "\e907";
-                    color: #adb5bd;
+                a[data-title=Logout],
+                a[data-title=Log_out],
+                .food[data-title=Log_out] {
+                    &::before {
+                        content: "\e907";
+                        color: #adb5bd;
+                    }
                 }
             }
         }
@@ -3677,7 +3681,8 @@ pre.command-output {
     .main>.main-left>.nav>li>a,
     .main .main-left .nav>li>a:first-child,
     .main>.main-left>.nav>.slide>.menu,
-    .main>.main-left>.nav>li>[data-title="Logout"] {
+    .main>.main-left>.nav>li>[data-title="Logout"],
+    .main>.main-left>.nav>li>[data-title="Log_out"] {
         font-size: .9rem;
     }
 
