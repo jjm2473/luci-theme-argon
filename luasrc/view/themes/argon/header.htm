@@ -122,7 +122,7 @@
 	<script src="<%=media%>/js/jquery.min.js?v=3.5.1"></script>
 </head>
 
-<body
+<body theme="<%=mode%>"
 	class="lang_<%=luci.i18n.context.lang%> <% if node then %><%= striptags( node.title ) %><% end %> <% if luci.dispatcher.context.authsession then %>logged-in<% end %>"
 	data-page="<%= table.concat(disp.context.requestpath, "-") %>">
 
