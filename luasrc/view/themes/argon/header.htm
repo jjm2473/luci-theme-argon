@@ -121,6 +121,7 @@
 </head>
 
 <body
+	theme="<%=mode%>"
 	class="lang_<%=luci.i18n.context.lang%> <% if node then %><%= striptags( node.title ) %><% end %> <% if luci.dispatcher.context.authsession then %>logged-in<% end %>"
 	data-page="<%= table.concat(disp.context.requestpath, "-") %>">
 
