@@ -2650,8 +2650,9 @@ body.modal-overlay-active #modal_overlay {
     left: .2em;
     width: 32px;
     content: "";
-    background: url(/luci-static/resources/icons/loading.gif) no-repeat center;
-    background-size: 16px;
+	background: currentColor;
+    mask: url(/luci-static/resources/icons/loading.svg) center / 16px no-repeat;
+	-webkit-mask: url(/luci-static/resources/icons/loading.svg) center / 16px no-repeat;
 }
 
 /* luci */
