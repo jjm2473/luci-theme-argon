@@ -1,0 +1,10 @@
+{
+  "name": "luci-theme-argon",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "lessc -x htdocs/luci-static/argon/less/cascade.less htdocs/luci-static/argon/css/cascade.css && lessc -x htdocs/luci-static/argon/less/dark.less htdocs/luci-static/argon/css/dark.css"
+  },
+  "devDependencies": {
+    "less": "*"
+  }
+}
